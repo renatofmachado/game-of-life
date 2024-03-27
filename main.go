@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"log"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -8,16 +9,26 @@ import (
 )
 
 const (
-  WINDOW_WIDTH = 640
-  WINDOW_HEIGHT = 480
+  WINDOW_WIDTH = 800
+  WINDOW_HEIGHT = 600
+)
+
+var (
+	random = flag.Int("random", -1, "How much of a chance there is of generating random life. 0-100")
 )
 
 func main() {
+  flag.Parse()
+
 	ebiten.SetWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT)
 	ebiten.SetWindowTitle("Game of Life")
 
   game := pkg.NewGame(WINDOW_WIDTH, WINDOW_HEIGHT)
-  game.SeedRandomLife()
+
+  if *random > 0 && *random <= 100 {
+    game.SeedRandomLife(*random)
+  }
+
 	if err := ebiten.RunGame(game); err != nil {
 		log.Fatal(err)
 	}
