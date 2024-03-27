@@ -194,7 +194,7 @@ func (g *Game) Update() error {
   }
 
   if inpututil.IsKeyJustReleased(ebiten.KeyMinus) {
-    if (CELL_SIZE - 1 > 0) {
+    if (CELL_SIZE - 1 > 3) {
       CELL_SIZE -= 1
       
       g.setNewCellsSize()
@@ -202,9 +202,11 @@ func (g *Game) Update() error {
   }
   
   if inpututil.IsKeyJustReleased(ebiten.KeyEqual) {
-    CELL_SIZE += 1
+    if (CELL_SIZE + 1 < 15) {
+      CELL_SIZE += 1
 
-    g.setNewCellsSize()
+      g.setNewCellsSize()
+    }
   }
 
   if g.interactive {
